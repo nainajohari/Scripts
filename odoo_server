@@ -1,0 +1,69 @@
+sudo apt-get update
+function funcweb
+{
+clear
+temp=`whoami`
+if [ $temp != 'root' ]
+then
+dialog --title 'Webkul Odoo Server Installer' --msgbox 'You are not authorised user to run this Application (RUN THIS APPLICATION AS A ROOT USER or Contact System Administrator)' 10 50 
+clear
+exit
+else
+dialog --title 'Webkul Odoo Server Installer' --msgbox 'Install Odoo Application' 10 50 
+clear
+fi
+dialog --title "Install Odoo Server !!!"  --yesno "Do you want to install Odoo Server?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then
+apt-get install -y postgresql
+dialog --inputbox "Enter User-Name" 40 60 2> temp10
+name_temp=`cat temp10`
+rm temp10
+read -sp "password: " pass
+clear
+su postgres -c "createuser --createdb --username postgres --no-createrole --no-superuser --pwprompt $name_temp"
+dialog --title 'Dependencies Installation' --msgbox 'Installation of Dependencies' 10 50
+clear
+sudo apt-get install -y python-cups python-dateutil python-decorator python-docutils python-feedparser python-gdata python-geoip python-gevent python-imaging python-jinja2 python-ldap python-libxslt1 python-lxml python-mako python-mock python-openid python-passlib python-psutil python-psycopg2 python-pybabel python-pychart python-pydot python-pyparsing python-pypdf python-reportlab python-requests python-simplejson python-tz python-unicodecsv python-unittest2 python-vatnumber python-vobject python-werkzeug python-xlwt python-yaml wkhtmltopdf
+dialog --title 'Git Installation' --msgbox 'Git Installation' 10 50
+clear
+apt-get install git
+cd /home/$name_temp/
+wget 192.168.1.138/odoo.zip
+unzip odoo.zip -d /home/$name_temp/
+rm -r /home/$name_temp/odoo.zip
+cp /home/$name_temp/odoo/debian/openerp-server.conf /etc/odoo-server.conf
+cat > /etc/odoo-server.conf << EOF
+[options]
+; This is the password that allows database operations:
+; admin_passwd = admin
+db_host = False
+db_port = False
+db_user = $name_temp
+db_password = $pass
+addons_path = /home/$name_temp/odoo/addons
+logfile = /var/log/odoo/odoo-server.log
+EOF
+clear
+cd /etc/init.d/
+wget http://www.theopensourcerer.com/wp-content/uploads/2014/09/odoo-server
+sed -i "s/\/opt/\/home\/users\/$name_temp/g" odoo-server
+sed -i "s/USER=odoo/USER=$name_temp/g" odoo-server
+clear
+chown $name_temp: /etc/init.d/odoo-server
+chmod 755 /etc/init.d/odoo-server
+mkdir -p /var/log/odoo
+chown $name_temp: /var/log/odoo
+/etc/init.d/odoo-server stop
+/etc/init.d/odoo-server start
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+exit
+else
+exit
+clear
+fi
+funcweb
+}
+funcweb

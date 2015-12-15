@@ -1,0 +1,20 @@
+check=`whoami`
+if [ $check == 'root' ]
+then
+dialog --title "FILE SHARING !!!"  --yesno "Do you want to enable file Sharing?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+dialog --inputbox "Enter User-Name for which you want to enable SHARING" 40 60 2> temp10
+name_temp=`cat temp10`
+echo $name_temp
+rm temp10
+usermod -a -G sambashare $name_temp
+echo "success"
+smbpasswd -a $name_temp
+echo "success"
+fi
+else
+dialog --title 'Unauthorised Access' --msgbox 'You are not authorised user to run this Application (RUN THIS APPLICATION AS A ROOT USER or Contact System Administrator)' 10 50
+clear
+fi
