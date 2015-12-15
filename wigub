@@ -1,0 +1,510 @@
+sudo apt-get update
+function funcweb
+{
+clear
+temp=`whoami`
+if [ $temp != 'root' ]
+then
+dialog --title 'Webkul Installer' --msgbox 'You are not authorised user to run this Application (RUN THIS APPLICATION AS A ROOT USER or Contact System Administrator)' 10 50 
+clear
+exit
+else
+dialog --title 'Webkul Installer' --msgbox 'Install Applications as per your Requirement' 10 50 
+clear
+fi
+dialog --checklist "Choose Applications to be installed on this system:" 20 80 10 \
+1 "Shutter Installation" off \
+2 "FileZilla Installation" off \
+3 "Sublime Installation" off \
+4 "MELD Installation" off \
+5 "PIDGIN Installation" off \
+6 "NODE JS Installation" off \
+7 "SKYPE Installation" off \
+8 "Firefox Installation" off \
+9 "Chrome Installation" off \
+10 "UPGRADE UBUNTU" off \
+11 "LAMP Installation" off \
+12 "APACHE Configuration" off \
+13 "VIM Installation" off \
+14 "PHPMYADMIN Installation" off \
+15 "Owncloud Installation" off \
+16 "Installation Troubleshooting" off \
+17 "LDAP Client Connect" off \
+18 "TeamViewer Installation" off \
+19 "MT Installation" off \
+20 "Open SSH Server" off \
+21 "USB Block" off \
+22 "Munin-Node Installation" off \
+23 "Flash-Plugin Installation" off \
+24 "RUBY SASS and COMPASS" off \
+25 "Chrome Installation" off \
+26 "Add Local apt Repository" off \
+27 "Simple Screen Recorder" off 2> error
+inputlist=$(cat error)
+rm error
+for choice in $inputlist
+do
+if [ $choice == '1' ]
+then
+dialog --title "Install Shutter !!!"  --yesno "Do you want to install shutter for screen video capturing?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo add-apt-repository ppa:shutter/ppa
+sudo apt-get update
+echo 'y' | sudo apt-get install shutter
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '2' ]
+then
+dialog --title "Install filezilla !!!"  --yesno "Do you want to install filezilla for FTP usage?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install filezilla
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '3' ]
+then
+dialog --title "Install Sublime !!!"  --yesno "Do you want to install Sublime Text Editor?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo add-apt-repository ppa:webupd8team/sublime-text-3
+sudo apt-get update
+echo 'y' | sudo apt-get install sublime-text-installer
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '4' ]
+then
+dialog --title "Install Meld !!!"  --yesno "Do you want to install Meld Differentiator?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo add-apt-repository ppa:tsvetko.tsvetkov/trusty-backports
+sudo apt-get update
+echo 'y' | sudo apt-get install meld
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '5' ]
+then
+dialog --title "Install Pidgin !!!"  --yesno "Do you want to install Pidgin Messenger?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install pidgin
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '6' ]
+then
+dialog --title "Install NodeJs !!!"  --yesno "Do you want to install NodeJs?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-add-repository ppa:chris-lea/node.js
+sudo apt-get update
+echo 'y' | sudo apt-get install nodejs
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear 
+fi
+
+elif [ $choice == '7' ]
+then
+dialog --title "Install Skype !!!"  --yesno "Do you want to install Skype?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install libqt4-dbus libqt4-network libqt4-xml libasound2
+wget http://www.skype.com/go/getskype-linux-beta-ubuntu-64
+sudo dpkg -i getskype-*
+sudo apt-get -f install
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '8' ]
+then
+dialog --title "Install Firefox Browser !!!"  --yesno "Do you want to install Firefox Browser?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install firefox
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '9' ]
+then
+dialog --title "Install Chromium-Browser !!!"  --yesno "Do you want to install Chromium-Browser?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install chromium-browser
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '10' ]
+then
+dialog --title "Ubuntu Upgradation !!!"  --yesno "Do you want to install shutter for screen video capturing?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install update-manager-core
+do-release-upgrade
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '11' ]
+then
+dialog --title "LAMP Installer !!!"  --yesno "Do you want to install LAMP on your system?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get update 2> outlog
+sudo apt-get install lamp-server^
+sudo apt-get install mysql-server php5-mysql 2> outlog
+sudo mysql_install_db 2> outlog
+sudo mysql_secure_installation 2> outlog
+sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt 2> outlog
+sudo service apache2 restart 2> outlog
+sudo apt-get install libapache2-mod-php5 2> outlog
+sudo a2enmod php5 2> outlog
+sudo service apache2 restart 2> outlog
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '12' ]
+then
+dialog --title "APACHE Configuration !!!"  --yesno "Do you want to configure apache on your system?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+#echo "Enter User Name for which you want to configure the apache server"
+#read name_temp
+dialog --inputbox "Enter User Name for which you want to configure the apache server name" 40 60 2> temp10
+name_temp=`cat temp10`
+rm temp10
+sudo mkdir \/home\/users\/$name_temp\/www
+sudo chown $name_temp \/home\/users\/$name_temp\/www
+cd \/home\/users\/$name_temp\/www
+sudo mkdir html
+sudo chown $name_temp \/home\/users\/$name_temp\/www\/html
+new="\/home\/users\/$name_temp\/www"
+new1="\/home\/users\/$name_temp\/www\/html"
+old="\/var\/www\/"
+old1="\/var\/www\/html"
+sed -i "s/$old/$new/" /etc/apache2/apache2.conf
+sed -i "s/$old1/$new1/" /etc/apache2/sites-available/000-default.conf
+sed -i "s/APACHE_RUN_USER=www-data/APACHE_RUN_USER=$name_temp/" /etc/apache2/envvars
+sudo apt-get install curl libcurl3 libcurl3-dev php5-curl
+sudo service apache2 restart
+echo "Your work directory for apache web server is \/home\/users\/$name_temp\/www\/html"
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '13' ]
+then
+dialog --title "Install VIM !!!"  --yesno "Do you want to install VIM Editor?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get update
+sudo apt-get install vim
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '14' ]
+then
+dialog --title "Install phpmyadmin !!!"  --yesno "Do you want to install phpmyadmin" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get install phpmyadmin
+sudo apt-get update
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '15' ]
+then
+dialog --title "Install Owncloud !!!"  --yesno "Do you want to install owncloud?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get install owncloud-client
+sudo apt-get update
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '16' ]
+then
+dialog --title "Installation Troubleshooting !!!"  --yesno "Do you want to run troubleshooter?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get autoclean
+sudo apt-get autoremove
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '17' ]
+then
+dialog --title "LDAP Client Configuration !!!"  --yesno "Do you want to configure client for LDAP?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get install ldap-auth-client nscd
+cat > /etc/nsswitch.conf << EOF
+passwd:         files ldap
+group:          files ldap
+shadow:         files ldap
+hosts:          files mdns4_minimal [NOTFOUND=return] dns
+networks:       files
+protocols:      db files
+services:       db files
+ethers:         db files
+rpc:            db files
+netgroup:       nis
+EOF
+
+cat > /usr/share/pam-configs/my-mkhomedir << EOF
+Name: activate mkhomedir
+Default: yes
+Priority: 900
+Session-Type: Additional
+Session:
+ required pam_mkhomedir.so umask=0022 skel=/etc/skel
+EOF
+sudo pam-auth-update
+sudo /etc/init.d/nscd restart
+
+cat > /etc/lightdm/lightdm.conf << EOF
+[SeatDefaults]
+greeter-session=unity-greeter
+user-session=ubuntu
+greeter-show-manual-login=true
+EOF
+
+cat > /etc/sudoers << EOF
+
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+%Wuser ALL = NOPASSWD: /usr/bin/smbpasswd
+%SUDOers ALL = NOPASSWD: /usr/bin/smbpasswd
+%Wuser ALL = NOPASSWD: /etc/init.d/samba
+%SUDOers ALL = NOPASSWD: /etc/init.d/samba
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+# Allow members of group sudo to execute any command
+%SUDOers ALL=(ALL:ALL) ALL
+%sudo ALL=(ALL:ALL) ALL
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+
+EOF
+clear
+echo "System Requires REBOOT(y/n)"
+read choice
+if [ $choice == 'y' ]
+then
+sudo reboot
+fi
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '18' ]
+then
+dialog --title "Install Teamviewer !!!"  --yesno "Do you want to install Teamviewer?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+wget http://www.teamviewer.com/download/teamviewer_linux.deb
+sudo dpkg --add-architecture i386
+sudo apt-get update
+echo 'y' | sudo apt-get install gdebi
+sudo gdebi teamviewer_linux.deb
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+elif [ $choice == '19' ]
+then
+dialog --title "Install MT !!!"  --yesno "Do you want to install MT?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install epoptes-client
+echo "192.168.1.250  server" >> /etc/hosts
+sudo apt-get update
+sudo epoptes-client -c
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+sudo reboot
+clear
+fi
+
+elif [ $choice == '20' ]
+then
+dialog --title "Install OpenSSH Server !!!"  --yesno "Do you want to install Open SSH Server?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install openssh-server
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '21' ]
+then
+dialog --title "Block USB access !!!"  --yesno "Do you want to block USB access?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then
+chmod 700 /media
+sed -i '/GRUB_DISABLE_RECOVERY="true"/s/^#//g' /etc/default/grub
+dialog --title 'Message' --msgbox 'USB Block Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '22' ]
+then
+dialog --title "Munin Node Installation !!!"  --yesno "Do you want to install Munin Node?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install munin-node
+echo "allow ^192\.168\.1\.251$" >> /etc/munin/munin-node.conf
+sudo service munin-node restart
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '23' ]
+then
+dialog --title "Install Flashplugin !!!"  --yesno "Do you want to install Flashplugin?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+sudo apt-get install -y flashplugin-installer
+sudo apt-get update
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '24' ]
+then
+dialog --title "RUBY (SASS and COMPASS) Installation !!!"  --yesno "Do you want to install RUBY (SASS and COMPASS)?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then 
+echo 'y' | sudo apt-get install ruby
+echo 'y' | sudo apt-get install ruby-dev
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+echo 'y' | sudo apt-get install python-software-properties python g++ make nodejs npm
+sudo npm install -g bower grunt-cli
+sudo gem install foundation
+sudo gem install compass
+sudo gem install sass
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '25' ]
+then
+dialog --title "Chrome Installation !!!"  --yesno "Do you want to install Chrome?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then
+sudo apt-get install libxss1 libappindicator1 libindicator7
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome*.deb
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == '26' ]
+then
+dialog --title "Add Local apt Repository!!!" --yesno "Do you want to add local APT repository?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then
+sed -i '1i deb-src http://192.168.1.160/ubuntu trusty main restricted universe multiverse' /etc/apt/sources.list
+sed -i '2i deb-src http://192.168.1.160/ubuntu trusty-security main restricted universe multiverse' /etc/apt/sources.list
+sed -i '3i deb-src http://192.168.1.160/ubuntu trusty-updates main restricted universe multiverse' /etc/apt/sources.list
+sed -i '4i deb http://192.168.1.160/ubuntu trusty main restricted universe multiverse' /etc/apt/sources.list
+sed -i '5i deb http://192.168.1.160/ubuntu trusty-security main restricted universe multiverse' /etc/apt/sources.list
+sed -i '6i deb http://192.168.1.160/ubuntu trusty-updates main restricted universe multiverse' /etc/apt/sources.list
+dialog --title 'Message' --msgbox 'Repository Added Successfuly!' 10 20
+clear
+fi
+
+elif [ $choice == '27' ]
+then
+dialog --title "Simple Screen Recorder Installation!!!" --yesno "Do you want to install Simple Screen Recorder?" 10 40
+ch=$?
+if [ $ch == '0' ]
+then
+sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+sudo apt-get update
+sudo apt-get install simplescreenrecorder
+dialog --title 'Message' --msgbox 'Installation Successful!' 10 20
+clear
+fi
+
+elif [ $choice == 'q' ]
+then
+exit
+else
+echo "wrong choice"
+fi
+done
+dialog --title "EXIT GATE"  --yesno "Do you want to exit this setup?" 6 25 
+exit=$?
+clear
+if [ $exit != 1 ]
+then
+exit
+fi
+funcweb
+}
+funcweb
+
+
+
+
