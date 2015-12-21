@@ -31,9 +31,9 @@ clear
 apt-get install git
 cd /home/$name_temp/
 wget 192.168.1.138/odoo.zip
-unzip odoo.zip -d /home/$name_temp/
-rm -r /home/$name_temp/odoo.zip
-cp /home/$name_temp/odoo/debian/openerp-server.conf /etc/odoo-server.conf
+unzip odoo.zip -d /home/users/$name_temp/
+rm -r /home/users/$name_temp/odoo.zip
+cp /home/users/$name_temp/odoo/debian/openerp-server.conf /etc/odoo-server.conf
 cat > /etc/odoo-server.conf << EOF
 [options]
 ; This is the password that allows database operations:
@@ -42,7 +42,7 @@ db_host = False
 db_port = False
 db_user = $name_temp
 db_password = $pass
-addons_path = /home/$name_temp/odoo/addons
+addons_path = /home/users/$name_temp/odoo/addons
 logfile = /var/log/odoo/odoo-server.log
 EOF
 clear
